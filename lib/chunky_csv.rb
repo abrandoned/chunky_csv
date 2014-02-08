@@ -15,11 +15,12 @@ module ChunkyCsv
 
     def split()
       batch = []
-      IO.foreach( file ) do |line|
+      IO.foreach( input_filename ) do |line|
         batch << line
 
         if batch.size >= self.chunk_size
           flush_batch( batch )
+          batch = []
         end
       end
 
@@ -29,7 +30,7 @@ module ChunkyCsv
     private
 
     def basename
-      @basename ||= File.basename(self.input_filename)
+      @basename ||= File.basename(self.input_filename, extension)
     end
 
     def create_output_directory
@@ -56,7 +57,7 @@ module ChunkyCsv
 
     def next_chunk_filename
       @chunk_number = @chunk_number + 1
-      return File.expand_path(output_directory, "#{output_basename}_#{chunk_number}#{extension}")
+      return File.join(output_directory, "#{output_basename}_#{chunk_number}#{extension}")
     end
 
     def output_basename
