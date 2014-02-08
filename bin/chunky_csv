@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+
+require 'chunky_csv'
+
+module ChunkyCsv
+  class ChunkyCsvCli < Thor
+
+    desc "split", "split csv file <file> into multiple csv's"
+    option :chunk_size, :type => :numeric, :default => 1000
+    option :input_file, :type => :string, :required => true
+    option :output_directory, :type => :string, :default => "./chunky_csv"
+    def split()
+      splitter = ChunkyCsv::FileSplitter.new( options[:input_file], options[:chunk_size], options[:output_directory] )
+      splitter.split
+    end
+
+  end
+end
+
+::ChunkyCsv::ChunkyCsvCli.start(ARGV)
