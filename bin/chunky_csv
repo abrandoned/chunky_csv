@@ -10,7 +10,7 @@ module ChunkyCsv
     option :input_file, :type => :string, :required => true
     option :output_directory, :type => :string, :default => "./chunky_csv"
     def split()
-      splitter = ChunkyCsv::FileSplitter.new( options[:input_file], options[:chunk_size], options[:output_directory] )
+      splitter = ::ChunkyCsv::FileSplitter.new( options[:input_file], options[:chunk_size], options[:output_directory] )
       splitter.split
     end
 
